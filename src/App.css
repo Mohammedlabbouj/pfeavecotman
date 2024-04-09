@@ -132,6 +132,7 @@ h1::first-letter{
   flex-direction: column;
   grid-area: 1 / 1 / 4 / 5;
   justify-self: end;
+  min-width: 100px;
 }
 .SymptomsContent{
   /* background-color:#F7EEDD; */

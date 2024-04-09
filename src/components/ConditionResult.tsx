@@ -45,7 +45,6 @@ function ConditionResult(_prop: Props) {
           <>
             <p>hi</p>
             {array.map((itam) => {
-              console.log(itam);
               <div>
                 <a href="">{itam}</a>
               </div>;

@@ -1,12 +1,27 @@
-import { useState } from "react";
-import { doesExist } from "./myFunctions";
+import { useState,useEffect } from "react";
+import { sendData, doesExist } from "./myFunctions";
 import Button from "./Button";
 import { FaClipboardList, FaStethoscope, FaTrash } from "react-icons/fa";
 import HiddenTextComponent from "./HiddenTextComponent";
 import AddButton from "./AddButton";
 import ConditionResult from "./ConditionResult";
+import axios from "axios";
 
 function Tabe() {
+  const [responseData, setResponseData] = useState<any>(null);
+  useEffect(() => {
+    const fetchDataFromBackend = async () => {
+      try {
+        const response = await axios.get("/api/data");
+        setResponseData(response.data);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+
+    fetchDataFromBackend();
+  }, []);
+
   const [hidden, setHidden] = useState(false);
   const [activeTab, setActiveTab] = useState("tab1");
   const arrayListe = [
@@ -99,11 +114,11 @@ function Tabe() {
                 setInput(inp.value);
                 if (input.length >= 2) {
                   setHidden(true);
-                } 
+                }
                 if (input.length <= 1) {
                   setHidden(false);
                 }
-                if(input == ""){
+                if (input == "") {
                   setHidden(false);
                 }
               }}
@@ -112,8 +127,8 @@ function Tabe() {
           <>
             {hidden && (
               <div className="SymptomList">
-                  {value
-                  .filter(itam => itam.includes(input))
+                {value
+                  .filter((itam) => itam.includes(input))
                   .map((itame, index) => (
                     <div className="SymptomItem">
                       <>
@@ -122,16 +137,16 @@ function Tabe() {
                             className="dropdown-item"
                             style={{ marginLeft: "20px" }}
                           >
-                            {itame}
+                            {}
                           </a>
                         </li>
-                      <AddButton
-                        onClick={() => {
-                          addSymptom(itame);
-                          setHidden(false);
-                        }}
-                      />
-                      </> 
+                        <AddButton
+                          onClick={() => {
+                            addSymptom(itame);
+                            setHidden(false);
+                          }}
+                        />
+                      </>
                     </div>
                   ))}
               </div>
@@ -169,7 +184,12 @@ function Tabe() {
             )}
           </div>
           <div className="toTab3">
-            <Button onClick={handleTab3} />
+            <Button
+              onClick={() => {
+                handleTab3();
+                sendData(Symptom);
+              }}
+            />
           </div>
         </div>
       );
