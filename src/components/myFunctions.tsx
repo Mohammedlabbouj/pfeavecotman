@@ -9,7 +9,7 @@ export function doesExist(_var: string, table: string[]): boolean {
   }
 export   const sendData = async (Symptom: string[]) => {
   try {
-    const response = await axios.post("/api/data", { Symptom });
+    const response = await axios.post("/api/data", {Symptom});
     console.log("Success:", response.data);
   } catch (error) {
     console.error("Error:", error);

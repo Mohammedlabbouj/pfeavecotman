@@ -18,7 +18,6 @@ function Tabe() {
         console.error("Error:", error);
       }
     };
-
     fetchDataFromBackend();
   }, []);
 
@@ -135,9 +134,9 @@ function Tabe() {
                         <li>
                           <a
                             className="dropdown-item"
-                            style={{ marginLeft: "20px" }}
+                            style={{ marginLeft: "20px",}}
                           >
-                            {}
+                            {itame}
                           </a>
                         </li>
                         <AddButton
