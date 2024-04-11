@@ -149,9 +149,9 @@ button{
 }
 .symptoms{
     width: 100%;
-    height: auto;
+    height: 100%;
     margin-top: 10px;
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
 
 }
 .listOfItames{
@@ -174,6 +174,9 @@ button{
     height: 50px;
     cursor: pointer;
     font-size: medium;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .Done{
     margin-top: 20px;
@@ -182,4 +185,37 @@ button{
 }
 .skip{
     color: aqua;
+}
+
+.conditionC{
+    background-color: #5a8dee;
+    color: #fff;
+}
+.btnCoondition{
+    width: 90%;
+    justify-self: center;
+    align-self: center;
+
+}
+.conditionContant{
+    position: absolute;
+    top: 100%;
+    left: 36%;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    padding: 40px;
+    align-items: center;
+    width: 750px;
+    height: 430px;
+    background-color: #fff;
+    text-align: center;
+    box-shadow: 0 0 10px 2px #656565;
+    z-index: 1;
+    border: 1px solid black;
+}
+.what{
+    width: 100%;
+    height: 100%;
+    border: 1px solid black;
 }

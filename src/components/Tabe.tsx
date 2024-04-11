@@ -6,8 +6,10 @@ import HiddenTextComponent from "./HiddenTextComponent";
 import AddButton from "./AddButton";
 import ConditionResult from "./ConditionResult";
 import axios from "axios";
-
-function Tabe() {
+type prop = {
+  symptoms: string[];
+};
+function Tabe({symptoms}:prop) {
   const [responseData, setResponseData] = useState<any>(null);
   useEffect(() => {
     const fetchDataFromBackend = async () => {
@@ -23,14 +25,7 @@ function Tabe() {
 
   const [hidden, setHidden] = useState(false);
   const [activeTab, setActiveTab] = useState("tab1");
-  const arrayListe = [
-    "skinny arms",
-    "pale skin",
-    "shedding skin",
-    "red skin",
-    "yellow skin",
-  ];
-  const [value, setValue] = useState<string[]>([...arrayListe]);
+  const [value, setValue] = useState<string[]>([...symptoms]);
   const [Symptom, setSymptom] = useState<string[]>([]);
   const [input, setInput] = useState<string>("");
   const deleteSymptom = (inde: number) => {
