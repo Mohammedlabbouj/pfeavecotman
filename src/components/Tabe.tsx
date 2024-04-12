@@ -10,24 +10,14 @@ type prop = {
   symptoms: string[];
 };
 function Tabe({symptoms}:prop) {
-  const [responseData, setResponseData] = useState<any>(null);
-  useEffect(() => {
-    const fetchDataFromBackend = async () => {
-      try {
-        const response = await axios.get("/api/data");
-        setResponseData(response.data);
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    };
-    fetchDataFromBackend();
-  }, []);
-
   const [hidden, setHidden] = useState(false);
   const [activeTab, setActiveTab] = useState("tab1");
   const [value, setValue] = useState<string[]>([...symptoms]);
   const [Symptom, setSymptom] = useState<string[]>([]);
   const [input, setInput] = useState<string>("");
+  useEffect(() => {
+    setValue([...symptoms]);
+  }, [symptoms]);
   const deleteSymptom = (inde: number) => {
     setSymptom(
       Symptom.filter((syt, index) => {
@@ -115,6 +105,7 @@ function Tabe({symptoms}:prop) {
                 if (input == "") {
                   setHidden(false);
                 }
+                
               }}
             />
           </div>
@@ -129,7 +120,7 @@ function Tabe({symptoms}:prop) {
                         <li>
                           <a
                             className="dropdown-item"
-                            style={{ marginLeft: "20px",}}
+                            style={{ marginLeft: "20px" }}
                           >
                             {itame}
                           </a>
@@ -162,7 +153,7 @@ function Tabe({symptoms}:prop) {
                   <>
                     <div className="singleSymptom">
                       {syt}
-                      <button
+                      <button 
                         className="ButtonFordelete"
                         onClick={() => {
                           deleteSymptom(index);

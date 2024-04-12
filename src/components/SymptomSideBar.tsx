@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect} from "react";
 import "../components/sideBar.css";
 import { FaBars,FaTimes } from "react-icons/fa";
 // import Tabe from "./Tabe";
@@ -20,10 +20,13 @@ const SymptomSideBar  = ({symptoms}:prop) => {
   const [hidden, setHidden] = useState(false);
   const [showCondition, setShowCondition] = useState(false);
   const [filterName, setFilterName] = useState("");
+  const [list, setList] = useState<string[]>([]);
+  useEffect(() => {
+    setList([...symptoms]);
+  }, [symptoms]);
   const toggleList = ()=>{
     setHidden(!hidden);
   }
-  const [list, setList] = useState<string[]>([...symptoms]);
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
@@ -54,7 +57,7 @@ const SymptomSideBar  = ({symptoms}:prop) => {
         </nav>
         <div
           className={`sidebar ${isOpen ? "active" : ""}`}
-          style={{ display: "flex", flexDirection: "column" }}
+          style={{ display: "flex", flexDirection: "column" ,position:"fixed",zIndex:"2"}}
         >
           <div className="sd-header">
             <h4 className="mb-0">Sidebar Header</h4>
@@ -162,9 +165,9 @@ const SymptomSideBar  = ({symptoms}:prop) => {
         </div>
         <div
           className={`sidebar-overlay ${isOpen ? "active" : ""}`}
+          style={{position:"fixed",zIndex:"1"}}
           onClick={() => {
             toggleSidebar();
-            // toggleList();
           }}
         ></div>
         <>
