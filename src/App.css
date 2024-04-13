@@ -325,9 +325,6 @@ span{
   overflow-y: scroll;
   overflow-x: hidden;
 }
-.symptom-list-header{
-
-}
 .SymptomItem{
   position: relative;
   display: flex;

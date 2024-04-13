@@ -1,6 +1,7 @@
 import { useState,useEffect} from "react";
 import "../components/sideBar.css";
 import { FaBars,FaTimes } from "react-icons/fa";
+import { sendData } from "./myFunctions";
 // import Tabe from "./Tabe";
 const ToggleSidebarButton: React.FC<{ onClick: () => void }>=({
   onClick
@@ -21,6 +22,7 @@ const SymptomSideBar  = ({symptoms}:prop) => {
   const [showCondition, setShowCondition] = useState(false);
   const [filterName, setFilterName] = useState("");
   const [list, setList] = useState<string[]>([]);
+  const [answer, setAnswer] = useState(String);
   useEffect(() => {
     setList([...symptoms]);
   }, [symptoms]);
@@ -158,7 +160,12 @@ const SymptomSideBar  = ({symptoms}:prop) => {
             </ul>
           </div>
           <div className="btnCoondition">
-            <button className="btnx conditionC" onClick={toggleConditionBar}>
+            <button className="btnx conditionC" onClick={()=>{
+              toggleConditionBar();
+              sendData(checkedItems).then((result) => {
+                setAnswer(result);
+              });
+            }}>
               Condition
             </button>
           </div>
@@ -211,7 +218,7 @@ const SymptomSideBar  = ({symptoms}:prop) => {
         <>
           {showCondition && (
             <div className="conditionContant">
-              <b>condition</b>
+              <b>{answer}</b>
               <hr style={{ borderColor: "gray", width: "100%" }} />
             </div>
           )}

@@ -15,6 +15,7 @@ function Tabe({symptoms}:prop) {
   const [value, setValue] = useState<string[]>([...symptoms]);
   const [Symptom, setSymptom] = useState<string[]>([]);
   const [input, setInput] = useState<string>("");
+  const [answer,setAnswer]= useState(String);
   useEffect(() => {
     setValue([...symptoms]);
   }, [symptoms]);
@@ -172,7 +173,9 @@ function Tabe({symptoms}:prop) {
             <Button
               onClick={() => {
                 handleTab3();
-                sendData(Symptom);
+                sendData(Symptom).then(result=>{
+                  setAnswer(result);
+                });
               }}
             />
           </div>
@@ -184,7 +187,7 @@ function Tabe({symptoms}:prop) {
           {/* <div className="ConditionContent">
             <p>See your Result!!</p>
           </div> */}
-          <ConditionResult symptoms={Symptom} />
+          <ConditionResult symptoms={Symptom} answer={answer}/>
         </div>
       );
     }

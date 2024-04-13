@@ -2,6 +2,7 @@ import React, { useState } from "react";
 type Props = {
   symptoms: string[];
   // method : ()=> void;
+  answer:string;
 };
 function ConditionResult(_prop: Props) {
   const [hidden , setHidden] = useState(false);
@@ -19,7 +20,7 @@ function ConditionResult(_prop: Props) {
             else if (hidden == true) setHidden(false);
           }}
         >
-          Condition
+          {_prop.answer}
         </div>
       </div>
       <div className="conditionINFO">
