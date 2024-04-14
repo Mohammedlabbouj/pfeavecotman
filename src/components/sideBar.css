@@ -151,7 +151,8 @@ button{
     width: 100%;
     height: 100%;
     margin-top: 10px;
-    /* overflow-y: scroll; */
+    overflow-y: scroll;
+    overflow-x: hidden;
 
 }
 .listOfItames{
@@ -203,7 +204,7 @@ button{
     left: 36%;
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
+    justify-content: center;
     padding: 40px;
     align-items: center;
     width: 750px;
@@ -212,10 +213,15 @@ button{
     text-align: center;
     box-shadow: 0 0 10px 2px #656565;
     z-index: 1;
-    border: 1px solid black;
 }
 .what{
     width: 100%;
     height: 100%;
     border: 1px solid black;
+}
+
+.mb-0{
+    font-size: larger;
+    font-weight: 900;
+    color: #5a8dee;
 }

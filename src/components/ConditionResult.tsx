@@ -5,7 +5,6 @@ type Props = {
   loading:boolean;
 };
 function ConditionResult(_prop: Props) {
-  const [hidden , setHidden] = useState(false);
   return (
     <div className="conditionContianer">
       {_prop.loading && <Loader />} {/* Conditionally render the Loader */}

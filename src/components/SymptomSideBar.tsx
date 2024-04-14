@@ -3,6 +3,7 @@ import "../components/sideBar.css";
 import { FaBars,FaTimes } from "react-icons/fa";
 import { sendData } from "./myFunctions";
 import diseaseDesign from "../assets/diseaseDesign.png";
+import Loader from "./Loader";
 // import Tabe from "./Tabe";
 const ToggleSidebarButton: React.FC<{ onClick: () => void }>=({
   onClick
@@ -15,7 +16,6 @@ const ToggleSidebarButton: React.FC<{ onClick: () => void }>=({
 };
 type prop={
   symptoms:string[];
-  
 };
 const SymptomSideBar  = ({symptoms}:prop) => {
   const [checkedItems, setCheckedItems] = useState<string[]>([]);
@@ -28,9 +28,9 @@ const SymptomSideBar  = ({symptoms}:prop) => {
   useEffect(() => {
     setList([...symptoms]);
   }, [symptoms]);
-  const toggleList = ()=>{
+  const toggleList = () => {
     setHidden(!hidden);
-  }
+  };
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
@@ -48,14 +48,30 @@ const SymptomSideBar  = ({symptoms}:prop) => {
     }
   };
 
+  //handle loader animation
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const handleClick = () => {
+    setIsLoading(true);
 
+    // Simulate a delay to mimic fetching data
+    setTimeout(() => {
+      // Once data is fetched, set isLoading to false and display the result
+      setIsLoading(false);
+    }, 2000); // Adjust the time as per your requirement
 
+    // You would typically perform an API call here
+    console.log(isLoading);
+  };
   return (
     <>
       <div style={{ position: "absolute", top: "0%", display: "flex" }}>
         <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-md">
           <div className=" navContianer">
-            <img src={diseaseDesign} alt="" style={{width:"250px",height:"60px"}}/>
+            <img
+              src={diseaseDesign}
+              alt=""
+              style={{ width: "250px", height: "60px" }}
+            />
             <div className="navButton">
               <ToggleSidebarButton onClick={toggleSidebar} />
             </div>
@@ -71,7 +87,7 @@ const SymptomSideBar  = ({symptoms}:prop) => {
           }}
         >
           <div className="sd-header">
-            <h4 className="mb-0">Sidebar Header</h4>
+            <h4 className="mb-0">Symptoms by Body parts</h4>
             <div className="btn btn-primary" onClick={toggleSidebar}>
               <FaTimes className="faTimes" />
             </div>
@@ -83,7 +99,20 @@ const SymptomSideBar  = ({symptoms}:prop) => {
                   className="sd-link"
                   onClick={() => {
                     setHidden(true);
+                    setFilterName("All");
+                    setShowCondition(false);
+                  }}
+                >
+                  All Symptoms
+                </a>
+              </li>
+              <li>
+                <a
+                  className="sd-link"
+                  onClick={() => {
+                    setHidden(true);
                     setFilterName("head");
+                    setShowCondition(false);
                   }}
                 >
                   Head
@@ -95,6 +124,7 @@ const SymptomSideBar  = ({symptoms}:prop) => {
                   onClick={() => {
                     setHidden(true);
                     setFilterName("neck");
+                    setShowCondition(false);
                   }}
                 >
                   Neck
@@ -106,6 +136,7 @@ const SymptomSideBar  = ({symptoms}:prop) => {
                   onClick={() => {
                     setHidden(true);
                     setFilterName("chest");
+                    setShowCondition(false);
                   }}
                 >
                   Chest
@@ -117,6 +148,7 @@ const SymptomSideBar  = ({symptoms}:prop) => {
                   onClick={() => {
                     setHidden(true);
                     setFilterName("eyes");
+                    setShowCondition(false);
                   }}
                 >
                   Eyes
@@ -127,6 +159,7 @@ const SymptomSideBar  = ({symptoms}:prop) => {
                   className="sd-link"
                   onClick={() => {
                     setHidden(true);
+                    setShowCondition(false);
                     setFilterName("skin");
                   }}
                 >
@@ -139,6 +172,7 @@ const SymptomSideBar  = ({symptoms}:prop) => {
                   onClick={() => {
                     setHidden(true);
                     setFilterName("back");
+                    setShowCondition(false);
                   }}
                 >
                   Back
@@ -150,6 +184,7 @@ const SymptomSideBar  = ({symptoms}:prop) => {
                   onClick={() => {
                     setHidden(true);
                     setFilterName("leg");
+                    setShowCondition(false);
                   }}
                 >
                   Legs
@@ -161,9 +196,10 @@ const SymptomSideBar  = ({symptoms}:prop) => {
                   onClick={() => {
                     setHidden(true);
                     setFilterName("stomach");
+                    setShowCondition(false);
                   }}
                 >
-                  stomach
+                  Stomach
                 </a>
               </li>
             </ul>
@@ -173,6 +209,8 @@ const SymptomSideBar  = ({symptoms}:prop) => {
               className="btnx conditionC"
               onClick={() => {
                 toggleConditionBar();
+                handleClick();
+                setHidden(false);
                 sendData(checkedItems).then((result) => {
                   setAnswer(result);
                 });
@@ -187,19 +225,18 @@ const SymptomSideBar  = ({symptoms}:prop) => {
           style={{ position: "fixed", zIndex: "1" }}
           onClick={() => {
             toggleSidebar();
+            setShowCondition(false);
+            setHidden(false);
           }}
         ></div>
         <>
           {hidden && (
             <>
-              <div className="listOfSymptoms">
-                <h3>List Of Symptoms</h3>
-                <div className="symptoms">
-                  {list
-                    .filter((item) =>
-                      item.toLowerCase().includes(filterName.toLowerCase())
-                    )
-                    .map((item, index) => (
+              {filterName == "All" ? (
+                <div className="listOfSymptoms">
+                  <h3>List Of {filterName} Symptoms</h3>
+                  <div className="symptoms">
+                    {list.map((item, index) => (
                       <li key={index} className="listOfItames">
                         <input
                           type="checkbox"
@@ -214,29 +251,66 @@ const SymptomSideBar  = ({symptoms}:prop) => {
                         </label>
                       </li>
                     ))}
+                  </div>
+                  <div className="btnContianer">
+                    <button className="btnx Done" onClick={toggleList}>
+                      Done
+                    </button>
+                    <button className="btnx skip" onClick={toggleList}>
+                      skip
+                    </button>
+                  </div>
                 </div>
-                <div className="btnContianer">
-                  <button className="btnx Done" onClick={toggleList}>
-                    Done
-                  </button>
-                  <button className="btnx skip" onClick={toggleList}>
-                    skip
-                  </button>
+              ) : (
+                <div className="listOfSymptoms">
+                  <h3>List Of {filterName} Symptoms</h3>
+                  <div className="symptoms">
+                    {list
+                      .filter((item) =>
+                        item.toLowerCase().includes(filterName.toLowerCase())
+                      )
+                      .map((item, index) => (
+                        <li key={index} className="listOfItames">
+                          <input
+                            type="checkbox"
+                            id={item}
+                            name={item}
+                            className="checkBox"
+                            checked={checkedItems.includes(item)} // Set checked attribute based on checkedItems state
+                            onChange={() => handleCheckboxChange(item)}
+                          />
+                          <label htmlFor={item} className="label">
+                            {item}
+                          </label>
+                        </li>
+                      ))}
+                  </div>
+                  <div className="btnContianer">
+                    <button className="btnx Done" onClick={toggleList}>
+                      Done
+                    </button>
+                    <button className="btnx skip" onClick={toggleList}>
+                      skip
+                    </button>
+                  </div>
                 </div>
-              </div>
+              )}
             </>
           )}
         </>
         <>
           {showCondition && (
             <div className="conditionContant">
-              <b>{answer}</b>
-              <hr style={{ borderColor: "gray", width: "100%" }} />
+              {isLoading && <Loader />} {/* Conditionally render the Loader */}
+              {answer && !isLoading && (
+                <>
+                  <b>{answer}</b>
+                </>
+              )}{" "}
             </div>
           )}
         </>
       </div>
-      {/* <Tabe></Tabe> */}
     </>
   );
 };
