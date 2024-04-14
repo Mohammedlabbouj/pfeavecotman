@@ -6,6 +6,7 @@ import HiddenTextComponent from "./HiddenTextComponent";
 import AddButton from "./AddButton";
 import ConditionResult from "./ConditionResult";
 import axios from "axios";
+import Loader from "./Loader";
 type prop = {
   symptoms: string[];
 };
@@ -15,7 +16,7 @@ function Tabe({symptoms}:prop) {
   const [value, setValue] = useState<string[]>([...symptoms]);
   const [Symptom, setSymptom] = useState<string[]>([]);
   const [input, setInput] = useState<string>("");
-  const [answer,setAnswer]= useState(String);
+  const [answer, setAnswer] = useState(String);
   useEffect(() => {
     setValue([...symptoms]);
   }, [symptoms]);
@@ -59,12 +60,26 @@ function Tabe({symptoms}:prop) {
     setActiveTab("tab3");
   };
 
+  //handle loader animation
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const handleClick = () => {
+    setIsLoading(true);
+
+    // Simulate a delay to mimic fetching data
+    setTimeout(() => {
+      // Once data is fetched, set isLoading to false and display the result
+      setIsLoading(false);
+    }, 2000); // Adjust the time as per your requirement
+
+    // You would typically perform an API call here
+    console.log(isLoading);
+  };
   const handleTabs = () => {
     if (activeTab === "tab1") {
       return (
         <>
           <div className="FirstTab">
-            <div className="Form-group" style={{padding:"30px"}}>
+            <div className="Form-group" style={{ padding: "30px" }}>
               <h1>Symptom Checker</h1>
               <p>
                 Identify possible conditions and treatment related to your
@@ -106,7 +121,6 @@ function Tabe({symptoms}:prop) {
                 if (input == "") {
                   setHidden(false);
                 }
-                
               }}
             />
           </div>
@@ -118,7 +132,7 @@ function Tabe({symptoms}:prop) {
                   .map((itame, index) => (
                     <div className="SymptomItem">
                       <>
-                        <li>
+                        <li style={{height:"40px", display:"flex" ,alignItems:"center"}}>
                           <a
                             className="dropdown-item"
                             style={{ marginLeft: "20px" }}
@@ -154,7 +168,7 @@ function Tabe({symptoms}:prop) {
                   <>
                     <div className="singleSymptom">
                       {syt}
-                      <button 
+                      <button
                         className="ButtonFordelete"
                         onClick={() => {
                           deleteSymptom(index);
@@ -173,7 +187,8 @@ function Tabe({symptoms}:prop) {
             <Button
               onClick={() => {
                 handleTab3();
-                sendData(Symptom).then(result=>{
+                handleClick();
+                sendData(Symptom).then((result) => {
                   setAnswer(result);
                 });
               }}
@@ -184,10 +199,7 @@ function Tabe({symptoms}:prop) {
     } else if (activeTab === "tab3") {
       return (
         <div className="ThirdTab">
-          {/* <div className="ConditionContent">
-            <p>See your Result!!</p>
-          </div> */}
-          <ConditionResult symptoms={Symptom} answer={answer}/>
+          <ConditionResult  answer={answer} loading={isLoading} />
         </div>
       );
     }

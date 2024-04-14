@@ -2,6 +2,7 @@ import { useState,useEffect} from "react";
 import "../components/sideBar.css";
 import { FaBars,FaTimes } from "react-icons/fa";
 import { sendData } from "./myFunctions";
+import diseaseDesign from "../assets/diseaseDesign.png";
 // import Tabe from "./Tabe";
 const ToggleSidebarButton: React.FC<{ onClick: () => void }>=({
   onClick
@@ -14,6 +15,7 @@ const ToggleSidebarButton: React.FC<{ onClick: () => void }>=({
 };
 type prop={
   symptoms:string[];
+  
 };
 const SymptomSideBar  = ({symptoms}:prop) => {
   const [checkedItems, setCheckedItems] = useState<string[]>([]);
@@ -45,13 +47,15 @@ const SymptomSideBar  = ({symptoms}:prop) => {
       setCheckedItems([...checkedItems, itemName]);
     }
   };
-  console.log(checkedItems)
+
+
+
   return (
     <>
       <div style={{ position: "absolute", top: "0%", display: "flex" }}>
         <nav className="navbar navbar-expand-lg navbar-light bg-white shadow-md">
           <div className=" navContianer">
-            <a className="navbar-brand text-primary">Sychecker</a>
+            <img src={diseaseDesign} alt="" style={{width:"250px",height:"60px"}}/>
             <div className="navButton">
               <ToggleSidebarButton onClick={toggleSidebar} />
             </div>
@@ -59,7 +63,12 @@ const SymptomSideBar  = ({symptoms}:prop) => {
         </nav>
         <div
           className={`sidebar ${isOpen ? "active" : ""}`}
-          style={{ display: "flex", flexDirection: "column" ,position:"fixed",zIndex:"2"}}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            position: "fixed",
+            zIndex: "2",
+          }}
         >
           <div className="sd-header">
             <h4 className="mb-0">Sidebar Header</h4>
@@ -160,19 +169,22 @@ const SymptomSideBar  = ({symptoms}:prop) => {
             </ul>
           </div>
           <div className="btnCoondition">
-            <button className="btnx conditionC" onClick={()=>{
-              toggleConditionBar();
-              sendData(checkedItems).then((result) => {
-                setAnswer(result);
-              });
-            }}>
+            <button
+              className="btnx conditionC"
+              onClick={() => {
+                toggleConditionBar();
+                sendData(checkedItems).then((result) => {
+                  setAnswer(result);
+                });
+              }}
+            >
               Condition
             </button>
           </div>
         </div>
         <div
           className={`sidebar-overlay ${isOpen ? "active" : ""}`}
-          style={{position:"fixed",zIndex:"1"}}
+          style={{ position: "fixed", zIndex: "1" }}
           onClick={() => {
             toggleSidebar();
           }}
