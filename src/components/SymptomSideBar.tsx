@@ -21,6 +21,7 @@ const SymptomSideBar  = ({symptoms}:prop) => {
   const [checkedItems, setCheckedItems] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
+  const [hiddenDescription, setHiddenDescription] = useState(false);
   const [showCondition, setShowCondition] = useState(false);
   const [filterName, setFilterName] = useState("");
   const [list, setList] = useState<string[]>([]);
@@ -36,6 +37,9 @@ const SymptomSideBar  = ({symptoms}:prop) => {
   };
   const toggleConditionBar = () => {
     setShowCondition(!showCondition);
+  };
+  const toggleDescription = () => {
+    setHiddenDescription(!hiddenDescription);
   };
   const handleCheckboxChange = (itemName: string) => {
     const isChecked = checkedItems.includes(itemName);
@@ -211,6 +215,7 @@ const SymptomSideBar  = ({symptoms}:prop) => {
                 toggleConditionBar();
                 handleClick();
                 setHidden(false);
+                setHiddenDescription(false)
                 sendData(checkedItems).then((result) => {
                   setAnswer(result);
                 });
@@ -227,6 +232,7 @@ const SymptomSideBar  = ({symptoms}:prop) => {
             toggleSidebar();
             setShowCondition(false);
             setHidden(false);
+            setHiddenDescription(false)
           }}
         ></div>
         <>
@@ -300,14 +306,33 @@ const SymptomSideBar  = ({symptoms}:prop) => {
         </>
         <>
           {showCondition && (
-            <div className="conditionContant">
-              {isLoading && <Loader />} {/* Conditionally render the Loader */}
-              {answer.condition && !isLoading && (
-                <>
-                  <b>{answer.condition}</b>
-                </>
-              )}{" "}
-            </div>
+            <>
+              <div className="conditionContant">
+              <h4 style={{position:"absolute",top:"10%"}}>Conditions that match your symptoms</h4>
+                {isLoading && <Loader />}{" "}
+                {/* Conditionally render the Loader */}
+                {answer.condition && !isLoading && (
+                  <>
+                    <b
+                      onClick={toggleDescription}
+                      style={{ cursor: "pointer" }}
+                      className="answer"
+                    >
+                      {answer.condition}
+                    </b>
+                  </>
+                )}{" "}
+                {hiddenDescription && (
+                  <>
+                    <div className="descriptionSideBar">
+                      <h4>Description of {answer.condition}</h4>
+                      <hr style={{ color: "black", width: "100%" }} />
+                      {answer.description}
+                    </div>
+                  </>
+                )}
+              </div>
+            </>
           )}
         </>
       </div>

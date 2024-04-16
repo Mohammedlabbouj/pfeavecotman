@@ -347,9 +347,12 @@ span{
   display: flex;
   width: 100%;
   height: auto;
-  padding: 25px;
+  padding-left: 25px;
+  padding-right: 25px;
   justify-content: center;
   align-items: center;
+  /* border: #000000 1px solid; */
+  gap: 10px;
 }
 .listOfConditions{
   flex: 50%;
@@ -361,11 +364,12 @@ span{
   padding-left: 50px;
   justify-content: center;
   align-items: center;
+  /* border: #ff0000 1px solid; */
 }
 .condition{
   display: flex;
   align-items: center;
-  width: 30%;
+  width: auto;
   height: 60px;
   padding: 20px;
   margin-top: 10px;
@@ -373,10 +377,26 @@ span{
   justify-content: center;
   font-size: x-large;
   font-style: normal;font-weight: 800;
-  border-radius: 20px;
+  border-radius: 10px;
   color: #69a5d9;
+  /* border: #000000 1px solid; */
 }
 .listOfConditions h3{
   font-size: x-large;
   color: #020D19;
+}
+.description{
+  flex: 50%;
+  /* border: #14b3f7 solid 1px; */
+  height: 100%;
+  padding: 20px;
+  font-family: Sans-serif;
+  font-weight: 600;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+}
+.description h4{
+  text-align: center;
 }
