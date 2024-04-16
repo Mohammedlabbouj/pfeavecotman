@@ -24,7 +24,7 @@ const SymptomSideBar  = ({symptoms}:prop) => {
   const [showCondition, setShowCondition] = useState(false);
   const [filterName, setFilterName] = useState("");
   const [list, setList] = useState<string[]>([]);
-  const [answer, setAnswer] = useState(String);
+  const [answer, setAnswer] = useState(Object);
   useEffect(() => {
     setList([...symptoms]);
   }, [symptoms]);
@@ -302,9 +302,9 @@ const SymptomSideBar  = ({symptoms}:prop) => {
           {showCondition && (
             <div className="conditionContant">
               {isLoading && <Loader />} {/* Conditionally render the Loader */}
-              {answer && !isLoading && (
+              {answer.condition && !isLoading && (
                 <>
-                  <b>{answer}</b>
+                  <b>{answer.condition}</b>
                 </>
               )}{" "}
             </div>

@@ -16,7 +16,7 @@ function Tabe({symptoms}:prop) {
   const [value, setValue] = useState<string[]>([...symptoms]);
   const [Symptom, setSymptom] = useState<string[]>([]);
   const [input, setInput] = useState<string>("");
-  const [answer, setAnswer] = useState(String);
+  const [answer, setAnswer] = useState(Object);
   useEffect(() => {
     setValue([...symptoms]);
   }, [symptoms]);
@@ -130,7 +130,7 @@ function Tabe({symptoms}:prop) {
                 {value
                   .filter((itam) => itam.includes(input))
                   .map((itame, index) => (
-                    <div className="SymptomItem">
+                    <div className="SymptomItem" key={index}>
                       <>
                         <li style={{height:"40px", display:"flex" ,alignItems:"center"}}>
                           <a
@@ -199,7 +199,7 @@ function Tabe({symptoms}:prop) {
     } else if (activeTab === "tab3") {
       return (
         <div className="ThirdTab">
-          <ConditionResult  answer={answer} loading={isLoading} />
+          <ConditionResult  condition={answer.condition} description={answer.description} loading={isLoading} />
         </div>
       );
     }

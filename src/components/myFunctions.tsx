@@ -7,10 +7,11 @@ export function doesExist(_var: string, table: string[]): boolean {
     }
     return false;
   }
-export   const sendData = async (Symptom: string[]) : Promise<string> => {
+export   const sendData = async (Symptom: string[]) : Promise<Object> => {
   try {
-    const response = await axios.post("http://127.0.0.1:8000/predict", {Symptom});
-    return (response.data[0]);
+    const response = await axios.post("http://127.0.0.1:8000/predict/", {Symptom});
+    console.log(response.data);
+    return (response.data);
   } catch (error) {
     console.error("Error:", error);
     return Promise.reject("An error occurred while sending data");
