@@ -2,8 +2,11 @@ import React from 'react'
 import "./LoaderAnimetion.css";
 function Loader() {
   return (
-    <div className="loader">
-      <div className="justify-content-center jimu-primary-loading"></div>
+    <div className="loading-wave">
+      <div className="loading-bar"></div>
+      <div className="loading-bar"></div>
+      <div className="loading-bar"></div>
+      <div className="loading-bar"></div>
     </div>
   );
 }
