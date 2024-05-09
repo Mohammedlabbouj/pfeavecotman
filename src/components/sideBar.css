@@ -165,6 +165,16 @@ button{
     font-size: larger;
     gap: 20px;
 }
+.listFilteredItems{
+    display: flex;
+    flex-direction: row;
+    padding-left:20px ;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    list-style: none;
+    font-size: larger;
+    gap: 20px;
+}
 .checkBox{
     cursor: pointer;
     width: 20px;

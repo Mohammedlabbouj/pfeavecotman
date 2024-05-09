@@ -13,25 +13,38 @@ function ConditionResult(_prop: Props) {
   return (
     <div className="conditionContianer">
       {_prop.loading && <Loader />} {/* Conditionally render the Loader */}
-      {_prop.description&&_prop.condition && !_prop.loading && (
-        <div className="listOfConditions">
-          <h3>Conditions that match your symptoms</h3>
-          <div
-            className="condition"
-            onClick={() => {
-              hide();
+      {_prop.description && _prop.condition && !_prop.loading && (
+        <>
+          <h3
+            style={{
+              fontFamily: "Sans-serif",
+              fontWeight: "bold",
+              fontSize: "large",
             }}
-            style={{ cursor: "pointer" }}
           >
-            {_prop.condition}
+            Conditions that match your symptoms
+          </h3>
+          <div className="listOfConditions">
+            <div
+              className="condition"
+              onClick={() => {
+                hide();
+              }}
+              style={{ cursor: "pointer" }}
+            >
+              {_prop.condition}
+            </div>
           </div>
-        </div>
+        </>
       )}{" "}
-      {hidden && <div className="description">
-        <h4>Description of {_prop.condition}</h4><br />
-        <hr />
-        {_prop.description}
-        </div>}
+      {hidden && (
+        <div className="description">
+          <h4>Description of {_prop.condition}</h4>
+          <br />
+          <hr />
+          {_prop.description}
+        </div>
+      )}
     </div>
   );
 }

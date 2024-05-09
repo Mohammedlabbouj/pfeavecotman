@@ -345,6 +345,7 @@ span{
 
 .conditionContianer{
   display: flex;
+  flex-direction: column;
   width: 100%;
   height: auto;
   padding-left: 25px;
@@ -375,10 +376,12 @@ span{
   margin-top: 10px;
   background-color: rgb(224, 217, 217) ;
   justify-content: center;
-  font-size: x-large;
-  font-style: normal;font-weight: 800;
+  font-size: large;
+  font-style: normal;
+  font-family: Sans-serif;
+  font-weight: 600;
   border-radius: 10px;
-  color: #69a5d9;
+  color: #000000;
   /* border: #000000 1px solid; */
 }
 .listOfConditions h3{
@@ -386,7 +389,7 @@ span{
   color: #020D19;
 }
 .description{
-  flex: 50%;
+  flex: 70%;
   /* border: #14b3f7 solid 1px; */
   height: 100%;
   padding: 20px;

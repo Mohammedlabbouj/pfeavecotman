@@ -14,10 +14,15 @@ const ToggleSidebarButton: React.FC<{ onClick: () => void }>=({
     </button>
   );
 };
-type prop={
-  symptoms:string[];
+ export interface YourDictionary {
+  [key: string]: string[]; // Define the type for your dictionary
+}
+type prop = {
+  symptoms: string[];
+  symptomsFilterd:YourDictionary;
 };
-const SymptomSideBar  = ({symptoms}:prop) => {
+const SymptomSideBar : React.FC<prop> = ({ symptoms,symptomsFilterd }:prop) => {
+  const [object,setObject] = useState<YourDictionary>({...symptomsFilterd});
   const [checkedItems, setCheckedItems] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
@@ -115,7 +120,7 @@ const SymptomSideBar  = ({symptoms}:prop) => {
                   className="sd-link"
                   onClick={() => {
                     setHidden(true);
-                    setFilterName("head");
+                    setFilterName("Head");
                     setShowCondition(false);
                   }}
                 >
@@ -151,7 +156,7 @@ const SymptomSideBar  = ({symptoms}:prop) => {
                   className="sd-link"
                   onClick={() => {
                     setHidden(true);
-                    setFilterName("eyes");
+                    setFilterName("Immune System");
                     setShowCondition(false);
                   }}
                 >
@@ -164,7 +169,7 @@ const SymptomSideBar  = ({symptoms}:prop) => {
                   onClick={() => {
                     setHidden(true);
                     setShowCondition(false);
-                    setFilterName("skin");
+                    setFilterName("Skin");
                   }}
                 >
                   Skin
@@ -199,7 +204,7 @@ const SymptomSideBar  = ({symptoms}:prop) => {
                   className="sd-link"
                   onClick={() => {
                     setHidden(true);
-                    setFilterName("stomach");
+                    setFilterName("Digestive System");
                     setShowCondition(false);
                   }}
                 >
@@ -215,7 +220,7 @@ const SymptomSideBar  = ({symptoms}:prop) => {
                 toggleConditionBar();
                 handleClick();
                 setHidden(false);
-                setHiddenDescription(false)
+                setHiddenDescription(false);
                 sendData(checkedItems).then((result) => {
                   setAnswer(result);
                 });
@@ -232,7 +237,7 @@ const SymptomSideBar  = ({symptoms}:prop) => {
             toggleSidebar();
             setShowCondition(false);
             setHidden(false);
-            setHiddenDescription(false)
+            setHiddenDescription(false);
           }}
         ></div>
         <>
@@ -271,24 +276,28 @@ const SymptomSideBar  = ({symptoms}:prop) => {
                 <div className="listOfSymptoms">
                   <h3>List Of {filterName} Symptoms</h3>
                   <div className="symptoms">
-                    {list
-                      .filter((item) =>
-                        item.toLowerCase().includes(filterName.toLowerCase())
+                    {Object.keys(symptomsFilterd)
+                      .filter((bodyPart) =>
+                        bodyPart.toLowerCase().includes(filterName.toLowerCase())
                       )
-                      .map((item, index) => (
-                        <li key={index} className="listOfItames">
-                          <input
-                            type="checkbox"
-                            id={item}
-                            name={item}
-                            className="checkBox"
-                            checked={checkedItems.includes(item)} // Set checked attribute based on checkedItems state
-                            onChange={() => handleCheckboxChange(item)}
-                          />
-                          <label htmlFor={item} className="label">
-                            {item}
-                          </label>
-                        </li>
+                      .map((bodyPart, index) => (
+                        <>
+                          {symptomsFilterd[bodyPart].map((symptom, idx) => (
+                            <li key={idx} className="listFilteredItems">
+                              <input
+                                type="checkbox"
+                                id={symptom}
+                                name={symptom}
+                                className="checkBox"
+                                checked={checkedItems.includes(symptom)}
+                                onChange={() => handleCheckboxChange(symptom)}
+                              />
+                              <label htmlFor={symptom} className="label">
+                                {symptom}
+                              </label>
+                            </li>
+                          ))}
+                        </>
                       ))}
                   </div>
                   <div className="btnContianer">
@@ -308,7 +317,9 @@ const SymptomSideBar  = ({symptoms}:prop) => {
           {showCondition && (
             <>
               <div className="conditionContant">
-              <h4 style={{position:"absolute",top:"10%"}}>Conditions that match your symptoms</h4>
+                <h4 style={{ position: "absolute", top: "10%" }}>
+                  Conditions that match your symptoms
+                </h4>
                 {isLoading && <Loader />}{" "}
                 {/* Conditionally render the Loader */}
                 {answer.condition && !isLoading && (

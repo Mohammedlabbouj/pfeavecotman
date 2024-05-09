@@ -17,3 +17,6 @@ export   const sendData = async (Symptom: string[]) : Promise<Object> => {
     return Promise.reject("An error occurred while sending data");
   }
 };
+
+
+
