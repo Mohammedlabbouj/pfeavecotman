@@ -17,8 +17,6 @@ function App() {
       const dataFromDb = responseFiltered?.data;
       setResponseData(response.data);
       setResponseDataFiltered(dataFromDb);
-      console.log("Filtered data:", dataFromDb);
-      console.log("Filtered data for 'Head':", dataFromDb?.["Head"]);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -26,23 +24,6 @@ function App() {
   useEffect(() => {
     fetchDataFromBackend();
   }, []);
-
-  const affiche = () => {
-    return Object.entries(responseDataFiltered)
-      .filter(([key, values]) =>
-        values.some((value) =>
-          value.toLowerCase().includes("Skin".toLowerCase())
-        )
-      )
-      .map(([key, values]) =>
-        values.map((value, index) => (
-          <>
-            <a>{value}</a> <br />
-          </>
-        ))
-      )
-      .flat();
-  };
   return (
     <div className="App">
       <SymptomSideBar

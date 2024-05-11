@@ -4,7 +4,7 @@ import { FaBars,FaTimes } from "react-icons/fa";
 import { sendData } from "./myFunctions";
 import diseaseDesign from "../assets/diseaseDesign.png";
 import Loader from "./Loader";
-// import Tabe from "./Tabe";
+
 const ToggleSidebarButton: React.FC<{ onClick: () => void }>=({
   onClick
 }) => {
@@ -22,7 +22,7 @@ type prop = {
   symptomsFilterd:YourDictionary;
 };
 const SymptomSideBar : React.FC<prop> = ({ symptoms,symptomsFilterd }:prop) => {
-  const [object,setObject] = useState<YourDictionary>({...symptomsFilterd});
+  const [keys,setkeys] = useState<string[]>([]);
   const [checkedItems, setCheckedItems] = useState<string[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
@@ -32,8 +32,10 @@ const SymptomSideBar : React.FC<prop> = ({ symptoms,symptomsFilterd }:prop) => {
   const [list, setList] = useState<string[]>([]);
   const [answer, setAnswer] = useState(Object);
   useEffect(() => {
+    setkeys(Object.keys(symptomsFilterd));
     setList([...symptoms]);
   }, [symptoms]);
+  console.log(keys);
   const toggleList = () => {
     setHidden(!hidden);
   };
@@ -103,116 +105,20 @@ const SymptomSideBar : React.FC<prop> = ({ symptoms,symptomsFilterd }:prop) => {
           </div>
           <div className="sd-body">
             <ul>
+            {keys.map((itam,index)=>(
               <li>
-                <a
-                  className="sd-link"
-                  onClick={() => {
-                    setHidden(true);
-                    setFilterName("All");
-                    setShowCondition(false);
-                  }}
-                >
-                  All Symptoms
+                <a className="sd-link" onClick={()=>{
+                  setHidden(true);
+                  setFilterName(itam);
+                  setShowCondition(false);
+                }}>
+                  {itam}
                 </a>
               </li>
-              <li>
-                <a
-                  className="sd-link"
-                  onClick={() => {
-                    setHidden(true);
-                    setFilterName("Head");
-                    setShowCondition(false);
-                  }}
-                >
-                  Head
-                </a>
-              </li>
-              <li>
-                <a
-                  className="sd-link"
-                  onClick={() => {
-                    setHidden(true);
-                    setFilterName("neck");
-                    setShowCondition(false);
-                  }}
-                >
-                  Neck
-                </a>
-              </li>
-              <li>
-                <a
-                  className="sd-link"
-                  onClick={() => {
-                    setHidden(true);
-                    setFilterName("chest");
-                    setShowCondition(false);
-                  }}
-                >
-                  Chest
-                </a>
-              </li>
-              <li>
-                <a
-                  className="sd-link"
-                  onClick={() => {
-                    setHidden(true);
-                    setFilterName("Immune System");
-                    setShowCondition(false);
-                  }}
-                >
-                  Eyes
-                </a>
-              </li>
-              <li>
-                <a
-                  className="sd-link"
-                  onClick={() => {
-                    setHidden(true);
-                    setShowCondition(false);
-                    setFilterName("Skin");
-                  }}
-                >
-                  Skin
-                </a>
-              </li>
-              <li>
-                <a
-                  className="sd-link"
-                  onClick={() => {
-                    setHidden(true);
-                    setFilterName("back");
-                    setShowCondition(false);
-                  }}
-                >
-                  Back
-                </a>
-              </li>
-              <li>
-                <a
-                  className="sd-link"
-                  onClick={() => {
-                    setHidden(true);
-                    setFilterName("leg");
-                    setShowCondition(false);
-                  }}
-                >
-                  Legs
-                </a>
-              </li>
-              <li>
-                <a
-                  className="sd-link"
-                  onClick={() => {
-                    setHidden(true);
-                    setFilterName("Digestive System");
-                    setShowCondition(false);
-                  }}
-                >
-                  Stomach
-                </a>
-              </li>
+            ))
+
+            }
             </ul>
-          </div>
           <div className="btnCoondition">
             <button
               className="btnx conditionC"
@@ -229,6 +135,7 @@ const SymptomSideBar : React.FC<prop> = ({ symptoms,symptomsFilterd }:prop) => {
               Condition
             </button>
           </div>
+          </div>
         </div>
         <div
           className={`sidebar-overlay ${isOpen ? "active" : ""}`}
@@ -243,36 +150,7 @@ const SymptomSideBar : React.FC<prop> = ({ symptoms,symptomsFilterd }:prop) => {
         <>
           {hidden && (
             <>
-              {filterName == "All" ? (
-                <div className="listOfSymptoms">
-                  <h3>List Of {filterName} Symptoms</h3>
-                  <div className="symptoms">
-                    {list.map((item, index) => (
-                      <li key={index} className="listOfItames">
-                        <input
-                          type="checkbox"
-                          id={item}
-                          name={item}
-                          className="checkBox"
-                          checked={checkedItems.includes(item)} // Set checked attribute based on checkedItems state
-                          onChange={() => handleCheckboxChange(item)}
-                        />
-                        <label htmlFor={item} className="label">
-                          {item}
-                        </label>
-                      </li>
-                    ))}
-                  </div>
-                  <div className="btnContianer">
-                    <button className="btnx Done" onClick={toggleList}>
-                      Done
-                    </button>
-                    <button className="btnx skip" onClick={toggleList}>
-                      skip
-                    </button>
-                  </div>
-                </div>
-              ) : (
+              {(
                 <div className="listOfSymptoms">
                   <h3>List Of {filterName} Symptoms</h3>
                   <div className="symptoms">
